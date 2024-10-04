@@ -17,6 +17,11 @@ pipeline {
                         sh 'npm install'
                     }
                 }
+                stage("test"){
+                    steps{
+                        sh 'npm run test'
+                    }
+                }
                 stage("build"){
                     steps{
                         sh 'npm run build'
@@ -34,6 +39,14 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        always {
+            cleanWs(cleanWhenNotBuilt: true,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true)
         }
     }
 }
